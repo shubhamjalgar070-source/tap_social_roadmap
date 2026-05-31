@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Ad Plain — Social Media Growth Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --earth: #1A1208;
+    --earth-mid: #2A1F0E;
+    --earth-rich: #3D2E14;
+    --green-deep: #1B3A1F;
+    --green-mid: #2D5C2E;
+    --green-field: #4A8C3F;
+    --wheat: #D4A84B;
+    --wheat-light: #E8C97A;
+    --sky-dawn: #E8955A;
+    --cream: #F5EED8;
+    --muted: #9A8B6E;
+    --lime: #8DB84A;
+    --lime-glow: #B5D95A;
+    --sky-blue: #5BA8D4;
+    --red-alert: #C4553A;
+    --gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--earth);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════════════════════
+     AGRICULTURE SVG BACKGROUND LAYERS
+  ═══════════════════════════════════ */
+
+  /* Fixed grain field pattern behind everything */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 120% 60% at 50% 100%, rgba(45,92,46,0.25) 0%, transparent 55%),
+      radial-gradient(ellipse 80% 40% at 20% 80%, rgba(212,168,75,0.08) 0%, transparent 50%),
+      linear-gradient(180deg, #0D0A04 0%, #1A1208 30%, #1B2410 70%, #0F1A0A 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Wheat field rows texture */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: repeating-linear-gradient(
+      175deg,
+      transparent 0px,
+      transparent 18px,
+      rgba(212,168,75,0.03) 18px,
+      rgba(212,168,75,0.03) 19px
+    ),
+    repeating-linear-gradient(
+      85deg,
+      transparent 0px,
+      transparent 60px,
+      rgba(74,140,63,0.04) 60px,
+      rgba(74,140,63,0.04) 61px
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.9rem 2rem;
+    background: rgba(10, 8, 2, 0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(212,168,75,0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .nav-logo-leaf {
+    color: var(--lime-glow);
+    font-size: 1.1rem;
+  }
+
+  .nav-logo span { color: var(--wheat); }
+
+  .nav-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--cream); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 2rem 5rem;
+    overflow: hidden;
+  }
+
+  /* SVG Agricultural Horizon Scene */
+  .hero-landscape {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    z-index: 1;
+  }
+
+  .hero-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      #050804 0%,
+      #0D1508 25%,
+      #142412 50%,
+      #1E3A18 75%,
+      #1B3010 100%
+    );
+    z-index: 0;
+  }
+
+  /* Floating particles like dust/pollen */
+  .particles {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--wheat);
+    opacity: 0;
+    animation: drift linear infinite;
+  }
+
+  @keyframes drift {
+    0%   { opacity: 0; transform: translateY(0) translateX(0); }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-120vh) translateX(30px); }
+  }
+
+  .hero-content {
+    position: relative; z-index: 5;
+    max-width: 860px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--lime-glow);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 28px; height: 1px;
+    background: var(--lime-glow);
+    opacity: 0.7;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 6.5vw, 5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 32px rgba(0,0,0,0.8);
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--wheat);
+    position: relative;
+  }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: rgba(245,238,216,0.65);
+    max-width: 580px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+  }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; flex-wrap: wrap;
+    background: rgba(0,0,0,0.35);
+    border: 1px solid rgba(212,168,75,0.12);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    backdrop-filter: blur(8px);
+    width: fit-content;
+  }
+
+  .hero-stat { display: flex; flex-direction: column; gap: 0.2rem; }
+
+  .hero-stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--wheat-light);
+  }
+
+  .hero-stat-val sup { font-size: 1.1rem; color: var(--lime-glow); }
+
+  .hero-stat-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 2.5rem; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    color: rgba(154,139,110,0.5);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: bob 2.2s ease-in-out infinite;
+    z-index: 5;
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    position: relative; z-index: 2;
+    padding: var(--gap) clamp(1rem, 5vw, 4rem);
+    background: linear-gradient(180deg, transparent 0%, rgba(10,8,2,0.3) 100%);
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--lime-glow);
+    margin-bottom: 0.7rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    opacity: 0.85;
+  }
+
+  .section-label::before { content: '//'; opacity: 0.4; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 0.85rem;
+    color: var(--cream);
+  }
+
+  .section-intro {
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    font-size: 0.92rem;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,168,75,0.12), transparent);
+    position: relative; z-index: 2;
+  }
+
+  /* ─── CARDS shared ─── */
+  .card {
+    background: rgba(20,16,6,0.75);
+    border: 1px solid rgba(212,168,75,0.1);
+    border-radius: 16px;
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212,168,75,0.25);
+  }
+
+  /* ─── PLATFORM CARDS ─── */
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.4rem;
+    margin-bottom: 4rem;
+  }
+
+  .platform-card {
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Colored top bar */
+  .platform-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  /* Social logo icon top-right */
+  .social-icon {
+    position: absolute; top: 1.2rem; right: 1.2rem;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.9;
+  }
+
+  .social-icon svg { width: 20px; height: 20px; fill: white; }
+
+  .icon-x    { background: #000000; border: 1px solid #333; }
+  .icon-li   { background: #0A66C2; }
+  .icon-fb   { background: #1877F2; }
+  .icon-ig   { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); }
+  .icon-tt   { background: #010101; border: 1px solid #333; }
+  .icon-yt   { background: #FF0000; }
+
+  .pc-twitter::before  { background: #1DA1F2; }
+  .pc-linkedin::before { background: #0A66C2; }
+  .pc-facebook::before { background: #1877F2; }
+  .pc-instagram::before{ background: linear-gradient(90deg,#f09433,#e6683c,#dc2743); }
+
+  .pc-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-size: 0.65rem;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 100px;
+    margin-bottom: 0.85rem;
+  }
+
+  .badge-primary    { background: rgba(91,168,212,0.15);  color: var(--sky-blue); }
+  .badge-opportunity{ background: rgba(141,184,74,0.15);  color: var(--lime-glow); }
+  .badge-stable     { background: rgba(154,139,110,0.15); color: var(--muted); }
+  .badge-underused  { background: rgba(212,168,75,0.15);  color: var(--wheat); }
+
+  .pc-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .pc-followers {
+    font-family: 'DM Mono', monospace;
+    font-size: 2rem; font-weight: 500;
+    color: var(--wheat-light);
+    margin-bottom: 0.2rem;
+  }
+
+  .pc-share { font-size: 0.75rem; color: var(--muted); margin-bottom: 1.2rem; }
+
+  .pc-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+    overflow: hidden;
+  }
+
+  .pc-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1.4s cubic-bezier(.4,0,.2,1);
+  }
+
+  .fill-twitter   { background: #1DA1F2; width: 0; }
+  .fill-linkedin  { background: #0A66C2; width: 0; }
+  .fill-facebook  { background: #1877F2; width: 0; }
+  .fill-instagram { background: linear-gradient(90deg,#f09433,#dc2743); width: 0; }
+
+  .pc-insight { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+
+  /* ─── RING WRAP ─── */
+  .ring-wrap {
+    display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap;
+    background: rgba(20,16,6,0.75);
+    border: 1px solid rgba(212,168,75,0.12);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .ring-svg { width: 150px; height: 150px; flex-shrink: 0; }
+
+  .ring-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; margin-bottom: 0.5rem;
+  }
+
+  .ring-info p { font-size: 0.84rem; color: var(--muted); line-height: 1.65; max-width: 520px; }
+
+  .ring-legend { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+
+  .legend-item {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.73rem; color: var(--muted);
+  }
+
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ─── SWOT ─── */
+  .swot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+  }
+
+  .swot-card { padding: 1.75rem; }
+
+  .swot-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900;
+    line-height: 1; margin-bottom: 0.4rem; opacity: 0.12;
+  }
+
+  .swot-title {
+    font-weight: 600; font-size: 0.82rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .swot-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+
+  .swot-list li {
+    font-size: 0.82rem; color: var(--muted);
+    padding-left: 1.1rem; position: relative; line-height: 1.45;
+  }
+
+  .swot-list li::before { content: '→'; position: absolute; left: 0; color: var(--wheat); font-size: 0.72rem; }
+
+  .swot-s .swot-letter, .swot-s .swot-title { color: var(--lime-glow); }
+  .swot-w .swot-letter, .swot-w .swot-title { color: var(--red-alert); }
+  .swot-o .swot-letter, .swot-o .swot-title { color: var(--sky-blue); }
+  .swot-t .swot-letter, .swot-t .swot-title { color: var(--wheat); }
+
+  /* ─── PHASES ─── */
+  .phases-wrapper {
+    display: flex; flex-direction: column; gap: 0;
+    position: relative;
+  }
+
+  .phases-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 28px; top: 60px; bottom: 60px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--sky-blue), var(--lime-glow), var(--wheat), var(--red-alert));
+    opacity: 0.25;
+  }
+
+  .phase-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .phase-item.visible { opacity: 1; transform: translateX(0); }
+
+  .phase-number {
+    width: 58px; height: 58px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 900;
+    flex-shrink: 0; position: relative; z-index: 1;
+  }
+
+  .ph1 .phase-number { background: rgba(91,168,212,0.12);  color: var(--sky-blue);    border: 2px solid var(--sky-blue); }
+  .ph2 .phase-number { background: rgba(141,184,74,0.12);  color: var(--lime-glow);   border: 2px solid var(--lime-glow); }
+  .ph3 .phase-number { background: rgba(212,168,75,0.12);  color: var(--wheat);       border: 2px solid var(--wheat); }
+  .ph4 .phase-number { background: rgba(196,85,58,0.12);   color: var(--red-alert);   border: 2px solid var(--red-alert); }
+
+  .phase-body { padding: 1.75rem; }
+
+  .phase-meta {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 0.75rem; flex-wrap: wrap;
+  }
+
+  .phase-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.2rem 0.65rem; border-radius: 100px;
+  }
+
+  .ph1 .phase-tag { background: rgba(91,168,212,0.15);  color: var(--sky-blue); }
+  .ph2 .phase-tag { background: rgba(141,184,74,0.15);  color: var(--lime-glow); }
+  .ph3 .phase-tag { background: rgba(212,168,75,0.15);  color: var(--wheat); }
+  .ph4 .phase-tag { background: rgba(196,85,58,0.15);   color: var(--red-alert); }
+
+  .phase-timeline { font-size: 0.73rem; color: var(--muted); font-family: 'DM Mono', monospace; }
+
+  .phase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;
+  }
+
+  .phase-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; }
+
+  .phase-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+
+  .action-chip {
+    font-size: 0.74rem;
+    padding: 0.32rem 0.88rem;
+    border-radius: 100px;
+    background: rgba(212,168,75,0.05);
+    border: 1px solid rgba(212,168,75,0.15);
+    color: var(--muted);
+    transition: background 0.2s, color 0.2s;
+    cursor: default;
+  }
+
+  .action-chip:hover { background: rgba(212,168,75,0.14); color: var(--cream); }
+
+  .phase-kpis {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; flex-wrap: wrap; gap: 1.5rem;
+  }
+
+  .kpi-item { display: flex; flex-direction: column; gap: 0.12rem; }
+
+  .kpi-val {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.1rem; font-weight: 500; color: var(--wheat-light);
+  }
+
+  .kpi-label { font-size: 0.66rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* ─── CHANNEL RECS ─── */
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.4rem;
+  }
+
+  .rec-card { padding: 1.75rem; }
+
+  .rec-platform {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; font-weight: 700;
+    margin-bottom: 0.35rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+
+  /* Small social logo in rec card */
+  .rec-logo {
+    width: 28px; height: 28px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .rec-logo svg { width: 16px; height: 16px; fill: white; }
+
+  .rec-priority { font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 1rem; }
+
+  .rec-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+
+  .rec-list li {
+    font-size: 0.81rem; color: var(--muted);
+    padding-left: 1.1rem; position: relative; line-height: 1.42;
+  }
+
+  .rec-list li::before {
+    content: '✦'; position: absolute; left: 0;
+    font-size: 0.52rem; top: 0.28rem; color: var(--wheat);
+  }
+
+  /* ─── ENGAGEMENT TIPS ─── */
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .tip-card { padding: 1.5rem; }
+  .tip-icon { font-size: 1.5rem; margin-bottom: 0.7rem; }
+
+  .tip-title { font-weight: 600; font-size: 0.88rem; margin-bottom: 0.45rem; color: var(--cream); }
+  .tip-desc  { font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative; z-index: 2;
+    padding: 3rem clamp(1rem, 5vw, 4rem);
+    border-top: 1px solid rgba(212,168,75,0.1);
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+    background: rgba(5,4,1,0.6);
+  }
+
+  /* Social icons row in footer */
+  .footer-socials {
+    display: flex; gap: 0.75rem; align-items: center;
+  }
+
+  .footer-social-btn {
+    width: 34px; height: 34px; border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0.6;
+    transition: opacity 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+
+  .footer-social-btn:hover { opacity: 1; transform: translateY(-2px); }
+  .footer-social-btn svg { width: 16px; height: 16px; fill: white; }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700; color: var(--muted); font-size: 0.88rem;
+  }
+
+  .footer-note { font-size: 0.7rem; color: rgba(154,139,110,0.4); font-family: 'DM Mono', monospace; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation: fadeUp 0.6s ease both; }
+  h1            { animation: fadeUp 0.6s 0.15s ease both; }
+  .hero-sub     { animation: fadeUp 0.6s 0.3s ease both; }
+  .hero-stats   { animation: fadeUp 0.6s 0.45s ease both; }
+
+  .count-up { display: inline-block; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 680px) {
+    .swot-grid      { grid-template-columns: 1fr; }
+    .hero-stats     { gap: 1.5rem; }
+    nav .nav-links  { display: none; }
+    .phases-wrapper::before { display: none; }
+    .phase-item     { grid-template-columns: 1fr; }
+    .phase-number   { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-leaf">🌾</span>
+    The Ad <span>Plain</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#audit">Audit</a></li>
+    <li><a href="#analysis">Analysis</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#recommendations">Channels</a></li>
+    <li><a href="#engagement">Engagement</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-sky"></div>
+
+  <!-- Animated wheat field SVG landscape -->
+  <svg class="hero-landscape" viewBox="0 0 1440 400" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <!-- Sky gradient -->
+    <defs>
+      <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0A1008" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#0A0E06" stop-opacity="1"/>
+      </linearGradient>
+      <linearGradient id="earthGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#1B3010"/>
+        <stop offset="100%" stop-color="#0D1A08"/>
+      </linearGradient>
+      <linearGradient id="hillGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2D5C2E"/>
+        <stop offset="100%" stop-color="#1B3A1F"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Distant hills -->
+    <path d="M0,280 Q180,200 360,230 Q540,260 720,210 Q900,160 1080,200 Q1260,240 1440,220 L1440,400 L0,400 Z" fill="url(#hillGrad)" opacity="0.4"/>
+    <!-- Mid hills -->
+    <path d="M0,320 Q200,270 400,290 Q600,310 800,265 Q1000,220 1200,270 Q1350,300 1440,280 L1440,400 L0,400 Z" fill="#2D5C2E" opacity="0.5"/>
+    <!-- Ground -->
+    <path d="M0,355 Q360,330 720,340 Q1080,350 1440,335 L1440,400 L0,400 Z" fill="url(#earthGrad)"/>
+
+    <!-- Wheat stalks row 1 -->
+    <g opacity="0.55" stroke="#D4A84B" stroke-width="1.2" fill="none">
+      <line x1="60"  y1="400" x2="58"  y2="350"/>
+      <line x1="100" y1="400" x2="102" y2="345"/>
+      <line x1="140" y1="400" x2="138" y2="355"/>
+      <line x1="180" y1="400" x2="182" y2="348"/>
+      <line x1="220" y1="400" x2="218" y2="352"/>
+      <line x1="260" y1="400" x2="262" y2="346"/>
+      <line x1="300" y1="400" x2="298" y2="354"/>
+      <line x1="340" y1="400" x2="342" y2="349"/>
+      <line x1="380" y1="400" x2="378" y2="356"/>
+      <line x1="420" y1="400" x2="422" y2="347"/>
+      <line x1="460" y1="400" x2="458" y2="353"/>
+      <line x1="500" y1="400" x2="502" y2="350"/>
+      <line x1="540" y1="400" x2="538" y2="355"/>
+      <line x1="580" y1="400" x2="582" y2="348"/>
+      <line x1="620" y1="400" x2="618" y2="352"/>
+      <line x1="660" y1="400" x2="662" y2="346"/>
+      <line x1="700" y1="400" x2="698" y2="354"/>
+      <line x1="740" y1="400" x2="742" y2="349"/>
+      <line x1="780" y1="400" x2="778" y2="356"/>
+      <line x1="820" y1="400" x2="822" y2="347"/>
+      <line x1="860" y1="400" x2="858" y2="353"/>
+      <line x1="900" y1="400" x2="902" y2="350"/>
+      <line x1="940" y1="400" x2="938" y2="355"/>
+      <line x1="980" y1="400" x2="982" y2="348"/>
+      <line x1="1020" y1="400" x2="1018" y2="352"/>
+      <line x1="1060" y1="400" x2="1062" y2="347"/>
+      <line x1="1100" y1="400" x2="1098" y2="354"/>
+      <line x1="1140" y1="400" x2="1142" y2="349"/>
+      <line x1="1180" y1="400" x2="1178" y2="356"/>
+      <line x1="1220" y1="400" x2="1222" y2="350"/>
+      <line x1="1260" y1="400" x2="1258" y2="353"/>
+      <line x1="1300" y1="400" x2="1302" y2="348"/>
+      <line x1="1340" y1="400" x2="1338" y2="355"/>
+      <line x1="1380" y1="400" x2="1382" y2="350"/>
+    </g>
+
+    <!-- Wheat heads (diamond shapes) -->
+    <g fill="#D4A84B" opacity="0.5">
+      <ellipse cx="58"  cy="348" rx="3" ry="6"/>
+      <ellipse cx="102" cy="343" rx="3" ry="6"/>
+      <ellipse cx="138" cy="353" rx="3" ry="6"/>
+      <ellipse cx="182" cy="346" rx="3" ry="6"/>
+      <ellipse cx="218" cy="350" rx="3" ry="6"/>
+      <ellipse cx="262" cy="344" rx="3" ry="6"/>
+      <ellipse cx="298" cy="352" rx="3" ry="6"/>
+      <ellipse cx="342" cy="347" rx="3" ry="6"/>
+      <ellipse cx="378" cy="354" rx="3" ry="6"/>
+      <ellipse cx="422" cy="345" rx="3" ry="6"/>
+      <ellipse cx="458" cy="351" rx="3" ry="6"/>
+      <ellipse cx="502" cy="348" rx="3" ry="6"/>
+      <ellipse cx="538" cy="353" rx="3" ry="6"/>
+      <ellipse cx="582" cy="346" rx="3" ry="6"/>
+      <ellipse cx="618" cy="350" rx="3" ry="6"/>
+      <ellipse cx="662" cy="344" rx="3" ry="6"/>
+      <ellipse cx="698" cy="352" rx="3" ry="6"/>
+      <ellipse cx="742" cy="347" rx="3" ry="6"/>
+      <ellipse cx="778" cy="354" rx="3" ry="6"/>
+      <ellipse cx="822" cy="345" rx="3" ry="6"/>
+      <ellipse cx="858" cy="351" rx="3" ry="6"/>
+      <ellipse cx="902" cy="348" rx="3" ry="6"/>
+      <ellipse cx="938" cy="353" rx="3" ry="6"/>
+      <ellipse cx="982" cy="346" rx="3" ry="6"/>
+      <ellipse cx="1018" cy="350" rx="3" ry="6"/>
+      <ellipse cx="1062" cy="345" rx="3" ry="6"/>
+      <ellipse cx="1098" cy="352" rx="3" ry="6"/>
+      <ellipse cx="1142" cy="347" rx="3" ry="6"/>
+      <ellipse cx="1178" cy="354" rx="3" ry="6"/>
+      <ellipse cx="1222" cy="348" rx="3" ry="6"/>
+      <ellipse cx="1258" cy="351" rx="3" ry="6"/>
+      <ellipse cx="1302" cy="346" rx="3" ry="6"/>
+      <ellipse cx="1338" cy="353" rx="3" ry="6"/>
+      <ellipse cx="1382" cy="348" rx="3" ry="6"/>
+    </g>
+
+    <!-- Tractor silhouette far right -->
+    <g transform="translate(1260, 285)" opacity="0.18" fill="#4A8C3F">
+      <!-- body -->
+      <rect x="10" y="20" width="55" height="28" rx="4"/>
+      <!-- cab -->
+      <rect x="30" y="8" width="30" height="18" rx="3"/>
+      <!-- exhaust -->
+      <rect x="28" y="2" width="4" height="10" rx="2"/>
+      <!-- back wheel -->
+      <circle cx="18" cy="50" r="16" fill="#2D5C2E"/>
+      <circle cx="18" cy="50" r="10" fill="#1B3A1F"/>
+      <!-- front wheel -->
+      <circle cx="58" cy="50" r="10" fill="#2D5C2E"/>
+      <circle cx="58" cy="50" r="6" fill="#1B3A1F"/>
+    </g>
+
+    <!-- Barn silhouette mid-left -->
+    <g transform="translate(80, 240)" opacity="0.15" fill="#1B3A1F">
+      <rect x="0" y="30" width="60" height="50" rx="2"/>
+      <polygon points="30,0 -5,32 65,32"/>
+      <rect x="22" y="50" width="16" height="30" rx="1"/>
+    </g>
+
+    <!-- Moon/sun glow top right -->
+    <circle cx="1340" cy="60" r="40" fill="#D4A84B" opacity="0.04"/>
+    <circle cx="1340" cy="60" r="25" fill="#D4A84B" opacity="0.06"/>
+    <circle cx="1340" cy="60" r="12" fill="#E8C97A" opacity="0.12"/>
+
+    <!-- Stars -->
+    <g fill="#F5EED8" opacity="0.35">
+      <circle cx="150"  cy="40"  r="1.2"/>
+      <circle cx="280"  cy="25"  r="0.8"/>
+      <circle cx="450"  cy="55"  r="1"/>
+      <circle cx="600"  cy="30"  r="1.4"/>
+      <circle cx="750"  cy="18"  r="0.9"/>
+      <circle cx="900"  cy="45"  r="1.1"/>
+      <circle cx="1050" cy="22"  r="0.7"/>
+      <circle cx="1180" cy="50"  r="1.3"/>
+      <circle cx="200"  cy="70"  r="0.8"/>
+      <circle cx="520"  cy="80"  r="1"/>
+      <circle cx="850"  cy="65"  r="0.9"/>
+    </g>
+
+    <!-- Overlay to fade into page bg -->
+    <rect width="1440" height="400" fill="url(#skyGrad)"/>
+  </svg>
+
+  <!-- Floating pollen particles -->
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Social Media Growth Strategy · UK Agriculture 2026</div>
+    <h1>From <em>5,582</em> followers<br>to sector authority</h1>
+    <p class="hero-sub">A data-driven four-phase roadmap for The Ad Plain to dominate social media across the UK agricultural and environmental sector — turning follower count into real community engagement and new business.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val"><span class="count-up" data-target="5582">0</span></div>
+        <div class="hero-stat-label">Total Followers Today</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">4</div>
+        <div class="hero-stat-label">Active Platforms</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">59<sup>%</sup></div>
+        <div class="hero-stat-label">Audience on X</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">4</div>
+        <div class="hero-stat-label">Growth Phases</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    scroll
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AUDIT -->
+<section id="audit">
+  <div class="section-label">Current State</div>
+  <h2>Social Media Audit</h2>
+  <p class="section-intro">Where TAP stands today across its four active platforms — follower distribution, channel health, and the key insight behind each.</p>
+
+  <!-- Donut + legend -->
+  <div class="ring-wrap">
+    <svg class="ring-svg" viewBox="0 0 150 150">
+      <g transform="rotate(-90 75 75)">
+        <circle cx="75" cy="75" r="54" fill="none" stroke="#1DA1F2" stroke-width="20" stroke-dasharray="202 137.7" stroke-dashoffset="0"/>
+        <circle cx="75" cy="75" r="54" fill="none" stroke="#0A66C2" stroke-width="20" stroke-dasharray="77.7 261.9" stroke-dashoffset="-202"/>
+        <circle cx="75" cy="75" r="54" fill="none" stroke="#1877F2" stroke-width="20" stroke-dasharray="54.6 284.9" stroke-dashoffset="-279.7"/>
+        <circle cx="75" cy="75" r="54" fill="none" stroke="#E1306C" stroke-width="20" stroke-dasharray="4.4 335.3" stroke-dashoffset="-334.3"/>
+      </g>
+      <circle cx="75" cy="75" r="44" fill="rgba(20,16,6,0.9)"/>
+      <text x="75" y="70" text-anchor="middle" fill="#F5EED8" font-family="Playfair Display,serif" font-size="16" font-weight="700">5,582</text>
+      <text x="75" y="84" text-anchor="middle" fill="#9A8B6E" font-family="DM Sans,sans-serif" font-size="8">followers</text>
+    </svg>
+    <div class="ring-info">
+      <h3>Audience Concentration Risk</h3>
+      <p>Nearly 60% of TAP's total social audience sits on X (Twitter) — a platform experiencing declining brand trust. While X remains valuable for real-time agri-industry discourse, this concentration is a strategic vulnerability. Diversifying into LinkedIn and Instagram is the single most important shift TAP can make.</p>
+      <div class="ring-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#1DA1F2"></div>X/Twitter 59.6% · 3,328</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#0A66C2"></div>LinkedIn 22.9% · 1,281</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1877F2"></div>Facebook 16.1% · 901</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#E1306C"></div>Instagram 1.3% · 72</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="platform-grid">
+    <!-- X/Twitter -->
+    <div class="platform-card card pc-twitter">
+      <div class="social-icon icon-x">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </div>
+      <div class="pc-badge badge-primary">Largest Platform</div>
+      <div class="pc-name">X (Twitter)</div>
+      <div class="pc-followers">3,328</div>
+      <div class="pc-share">59.6% of total audience</div>
+      <div class="pc-bar"><div class="pc-bar-fill fill-twitter" data-width="59.6"></div></div>
+      <div class="pc-insight">TAP's biggest channel for industry commentary, policy news and agri-journalism connections. High risk from over-reliance. Maintain momentum while shifting investment to LinkedIn for long-term B2B growth.</div>
+    </div>
+
+    <!-- LinkedIn -->
+    <div class="platform-card card pc-linkedin">
+      <div class="social-icon icon-li">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </div>
+      <div class="pc-badge badge-opportunity">High Growth Potential</div>
+      <div class="pc-name">LinkedIn</div>
+      <div class="pc-followers">1,281</div>
+      <div class="pc-share">22.9% of total audience</div>
+      <div class="pc-bar"><div class="pc-bar-fill fill-linkedin" data-width="22.9"></div></div>
+      <div class="pc-insight">The strongest B2B channel for TAP's agency positioning. Agribusiness decision-makers and sustainability managers are active here. Thought leadership, case studies and agency wins compound well over time.</div>
+    </div>
+
+    <!-- Facebook -->
+    <div class="platform-card card pc-facebook">
+      <div class="social-icon icon-fb">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </div>
+      <div class="pc-badge badge-stable">Stable Community</div>
+      <div class="pc-name">Facebook</div>
+      <div class="pc-followers">901</div>
+      <div class="pc-share">16.1% of total audience</div>
+      <div class="pc-bar"><div class="pc-bar-fill fill-facebook" data-width="16.1"></div></div>
+      <div class="pc-insight">Crucial for reaching farming communities directly. Farmer groups, machinery sales and NFU-style discussions happen here. Group participation and targeted ads can unlock significant reach beyond the current following.</div>
+    </div>
+
+    <!-- Instagram -->
+    <div class="platform-card card pc-instagram">
+      <div class="social-icon icon-ig">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </div>
+      <div class="pc-badge badge-underused">Massively Underused</div>
+      <div class="pc-name">Instagram</div>
+      <div class="pc-followers">72</div>
+      <div class="pc-share">1.3% — Niche Drone account</div>
+      <div class="pc-bar"><div class="pc-bar-fill fill-instagram" data-width="1.3"></div></div>
+      <div class="pc-insight">Just 72 followers on a siloed drone account — but agriculture is one of Instagram's most visually compelling sectors. TAP's aerial farm content is perfectly suited here. A unified, consistent presence is a huge untapped opportunity.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ANALYSIS -->
+<section id="analysis">
+  <div class="section-label">Strategic Analysis</div>
+  <h2>Where TAP Stands</h2>
+  <p class="section-intro">An honest assessment of strengths to build on, weaknesses to address, opportunities to seize, and threats to mitigate in the UK agricultural sector.</p>
+
+  <div class="swot-grid">
+    <div class="swot-card card swot-s">
+      <div class="swot-letter">S</div>
+      <div class="swot-title">Strengths</div>
+      <ul class="swot-list">
+        <li>B Corp certified — unique credibility in sustainable agri-marketing</li>
+        <li>23-year track record in agriculture, food and environment</li>
+        <li>Major clients: BASF, Bayer, Syngenta, Agrii — adds instant credibility</li>
+        <li>TAP España adds international reach and bilingual content potential</li>
+        <li>Award-winning: Rural Business Awards, PPA Independent Publisher finalist</li>
+        <li>In-house drone capability — perfect for visual-first platforms</li>
+      </ul>
+    </div>
+
+    <div class="swot-card card swot-w">
+      <div class="swot-letter">W</div>
+      <div class="swot-title">Weaknesses</div>
+      <ul class="swot-list">
+        <li>59.6% audience concentrated on X — single platform dependency</li>
+        <li>Instagram near-dormant (72 followers) despite strong visual content</li>
+        <li>No TikTok presence — missing younger farmers and rural audiences</li>
+        <li>5,582 total followers is modest for a 23-year-old specialist agency</li>
+        <li>Content likely too corporate — lacks creator-style authenticity</li>
+        <li>No YouTube channel utilising drone/video assets</li>
+      </ul>
+    </div>
+
+    <div class="swot-card card swot-o">
+      <div class="swot-letter">O</div>
+      <div class="swot-title">Opportunities</div>
+      <ul class="swot-list">
+        <li>TikTok agri-boom: creators like Olly Harrison hit 100k+ views per post</li>
+        <li>Instagram 'farm life' content resonates strongly with general public</li>
+        <li>LinkedIn: very few agri-agencies publish genuine thought leadership</li>
+        <li>Seasonal content calendar (harvest, planting, LAMMA) drives predictable peaks</li>
+        <li>B Corp / sustainability angle in growing demand from agri-brands</li>
+        <li>Facebook farming groups offer huge organic reach beyond followers</li>
+      </ul>
+    </div>
+
+    <div class="swot-card card swot-t">
+      <div class="swot-letter">T</div>
+      <div class="swot-title">Threats</div>
+      <ul class="swot-list">
+        <li>X/Twitter declining brand safety concerns reducing corporate investment</li>
+        <li>Algorithm changes can wipe organic reach overnight on any platform</li>
+        <li>Growing number of agri-specialist digital agencies competing for attention</li>
+        <li>AI content flood: audiences demanding higher authenticity to cut through</li>
+        <li>Content fatigue — brands need more creative and original approaches</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-label">4-Phase Growth Plan</div>
+  <h2>The Roadmap</h2>
+  <p class="section-intro">A sequenced 12-month programme built on solid foundations first. Each phase has clear actions, timelines and measurable KPIs — designed for a specialist agri-marketing agency.</p>
+
+  <div class="phases-wrapper">
+
+    <div class="phase-item ph1" data-phase="1">
+      <div class="phase-number">1</div>
+      <div class="phase-body card">
+        <div class="phase-meta">
+          <span class="phase-tag">Foundation</span>
+          <span class="phase-timeline">Months 1–2 · Immediate Priority</span>
+        </div>
+        <div class="phase-title">Audit, Align & Fix the Basics</div>
+        <div class="phase-desc">Before growing, everything must be clean, consistent and intentional. Establish a unified brand voice, fill content gaps, and set up infrastructure. TAP's B Corp credentials and sector specialism must be front and centre on every platform.</div>
+        <div class="phase-actions">
+          <span class="action-chip">Unify all bio copy & CTAs</span>
+          <span class="action-chip">Define brand voice guide for social</span>
+          <span class="action-chip">Refresh all profile headers & images</span>
+          <span class="action-chip">Build 8-week content calendar</span>
+          <span class="action-chip">Relaunch Instagram as @theadplain</span>
+          <span class="action-chip">Pin best-performing posts on each platform</span>
+          <span class="action-chip">Create B Corp explainer post series</span>
+          <span class="action-chip">Enable LinkedIn Newsletter</span>
+          <span class="action-chip">Set up analytics dashboard</span>
+        </div>
+        <div class="phase-kpis">
+          <div class="kpi-item"><div class="kpi-val">4/4</div><div class="kpi-label">Platforms active</div></div>
+          <div class="kpi-item"><div class="kpi-val">3×/wk</div><div class="kpi-label">Posting cadence</div></div>
+          <div class="kpi-item"><div class="kpi-val">100%</div><div class="kpi-label">Bios updated</div></div>
+          <div class="kpi-item"><div class="kpi-val">1</div><div class="kpi-label">Voice guide published</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-item ph2" data-phase="2">
+      <div class="phase-number">2</div>
+      <div class="phase-body card">
+        <div class="phase-meta">
+          <span class="phase-tag">Content Engine</span>
+          <span class="phase-timeline">Months 3–5 · Build Momentum</span>
+        </div>
+        <div class="phase-title">Create Content That Actually Engages</div>
+        <div class="phase-desc">Shift from broadcasting to storytelling. Introduce the content formats that work in UK agri-social: authentic behind-the-scenes, drone visuals, client case studies as narrative, and the seasonal farming calendar as a content engine. Become the agency people want to follow.</div>
+        <div class="phase-actions">
+          <span class="action-chip">Launch "Field Notes" LinkedIn series</span>
+          <span class="action-chip">Monthly drone aerial Reels</span>
+          <span class="action-chip">Client spotlight storytelling series</span>
+          <span class="action-chip">Seasonal content: planting / harvest</span>
+          <span class="action-chip">Team behind-the-scenes content</span>
+          <span class="action-chip">Engage NFU, AHDB & trade media</span>
+          <span class="action-chip">TikTok soft launch</span>
+          <span class="action-chip">Facebook group participation strategy</span>
+          <span class="action-chip">LinkedIn carousel posts</span>
+        </div>
+        <div class="phase-kpis">
+          <div class="kpi-item"><div class="kpi-val">+200</div><div class="kpi-label">LinkedIn followers</div></div>
+          <div class="kpi-item"><div class="kpi-val">+300</div><div class="kpi-label">Instagram followers</div></div>
+          <div class="kpi-item"><div class="kpi-val">5%+</div><div class="kpi-label">Avg engagement rate</div></div>
+          <div class="kpi-item"><div class="kpi-val">12</div><div class="kpi-label">LI articles published</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-item ph3" data-phase="3">
+      <div class="phase-number">3</div>
+      <div class="phase-body card">
+        <div class="phase-meta">
+          <span class="phase-tag">Amplification</span>
+          <span class="phase-timeline">Months 6–9 · Scale What Works</span>
+        </div>
+        <div class="phase-title">Amplify, Collaborate & Go Paid</div>
+        <div class="phase-desc">By month 6, TAP will have data on what performs. Double down on winners, introduce paid social to accelerate the best posts, and begin formal collaborations with agricultural creators, industry bodies, and clients. LinkedIn becomes the primary thought leadership vehicle; TikTok gets its first investment.</div>
+        <div class="phase-actions">
+          <span class="action-chip">Boost top LinkedIn posts (£500/mo)</span>
+          <span class="action-chip">Instagram Reels paid promotion</span>
+          <span class="action-chip">Collaborate with UK farming creators</span>
+          <span class="action-chip">Co-create content with AHDB or NFU</span>
+          <span class="action-chip">Launch LinkedIn Showcase page</span>
+          <span class="action-chip">Monthly social analytics reporting</span>
+          <span class="action-chip">Facebook retargeting to site visitors</span>
+          <span class="action-chip">Host LinkedIn Live / webinar</span>
+          <span class="action-chip">Activate TikTok ad account</span>
+        </div>
+        <div class="phase-kpis">
+          <div class="kpi-item"><div class="kpi-val">2,000</div><div class="kpi-label">LinkedIn target</div></div>
+          <div class="kpi-item"><div class="kpi-val">600</div><div class="kpi-label">Instagram target</div></div>
+          <div class="kpi-item"><div class="kpi-val">3×</div><div class="kpi-label">Reach vs organic</div></div>
+          <div class="kpi-item"><div class="kpi-val">2</div><div class="kpi-label">Creator collabs</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-item ph4" data-phase="4">
+      <div class="phase-number">4</div>
+      <div class="phase-body card">
+        <div class="phase-meta">
+          <span class="phase-tag">Authority</span>
+          <span class="phase-timeline">Months 10–12 · Own the Sector</span>
+        </div>
+        <div class="phase-title">Become the Voice of UK Agri-Marketing</div>
+        <div class="phase-desc">Establish TAP as the definitive social media voice of UK agricultural and environmental marketing. Publish original sector research, own niche hashtags, speak at Cereals and LAMMA, and convert social authority directly into new business enquiries. This is when the network effects of two years' work compound.</div>
+        <div class="phase-actions">
+          <span class="action-chip">Publish UK Agri Social Trends Report</span>
+          <span class="action-chip">Launch TAP audio series or podcast</span>
+          <span class="action-chip">Host virtual industry event</span>
+          <span class="action-chip">Build client ambassador network</span>
+          <span class="action-chip">Create lead-gen gated content</span>
+          <span class="action-chip">Social → CRM attribution tracking</span>
+          <span class="action-chip">Pitch to speak at Cereals / LAMMA</span>
+          <span class="action-chip">Cross-channel PR + social campaign</span>
+        </div>
+        <div class="phase-kpis">
+          <div class="kpi-item"><div class="kpi-val">10k+</div><div class="kpi-label">Total community</div></div>
+          <div class="kpi-item"><div class="kpi-val">3,000</div><div class="kpi-label">LinkedIn followers</div></div>
+          <div class="kpi-item"><div class="kpi-val">5+</div><div class="kpi-label">Enquiries from social</div></div>
+          <div class="kpi-item"><div class="kpi-val">#1</div><div class="kpi-label">UK agri-agency socials</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CHANNEL RECS -->
+<section id="recommendations">
+  <div class="section-label">Channel Strategy</div>
+  <h2>Platform Recommendations</h2>
+  <p class="section-intro">Specific, actionable recommendations for each platform — built around what genuinely works in UK agricultural and environmental marketing.</p>
+
+  <div class="rec-grid">
+
+    <div class="rec-card card">
+      <div class="rec-platform">
+        <div class="rec-logo icon-li"><svg viewBox="0 0 24 24" fill="white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+        LinkedIn
+      </div>
+      <div class="rec-priority">Highest priority · B2B growth engine</div>
+      <ul class="rec-list">
+        <li>Post 4–5× per week: thought leadership, client wins, team stories</li>
+        <li>Monthly long-form articles on agri-marketing trends and insights</li>
+        <li>Comment meaningfully on NFU, AHDB, Bayer, Syngenta content daily</li>
+        <li>Carousel posts explaining complex concepts — perform 3× better</li>
+        <li>Activate LinkedIn Newsletter: "TAP Into Agriculture" monthly digest</li>
+        <li>Sustainability and B Corp content resonates with agri-brand CMOs</li>
+        <li>Target: 3,000 followers by end of year 1</li>
+      </ul>
+    </div>
+
+    <div class="rec-card card">
+      <div class="rec-platform">
+        <div class="rec-logo icon-ig"><svg viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></div>
+        Instagram
+      </div>
+      <div class="rec-priority">High priority · Visual storytelling + brand awareness</div>
+      <ul class="rec-list">
+        <li>Rebrand from drone-niche to @theadplain — unified identity immediately</li>
+        <li>4 posts/week: aerial drone shots, seasonal field content, team at client sites</li>
+        <li>Reels showing campaign process: brief → concept → final output</li>
+        <li>Harvest Reels in September — this is Instagram gold for UK farming</li>
+        <li>Stories for behind-the-scenes agency culture and day-to-day life</li>
+        <li>Collaborate with Tom Pemberton or similar agricultural creators</li>
+        <li>Target: 600 followers by month 9</li>
+      </ul>
+    </div>
+
+    <div class="rec-card card">
+      <div class="rec-platform">
+        <div class="rec-logo icon-x"><svg viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+        X (Twitter)
+      </div>
+      <div class="rec-priority">Maintain + diversify · Industry discourse</div>
+      <ul class="rec-list">
+        <li>Maintain 3–4 posts/day for commentary and news reaction</li>
+        <li>Engage directly with agri-journalists, DEFRA announcements, NFU threads</li>
+        <li>Position TAP as the agency voice on agri-marketing policy discussion</li>
+        <li>Reduce emotional investment over time — shift focus to LinkedIn</li>
+        <li>Use for real-time show coverage: LAMMA, Cereals, Agritechnica</li>
+        <li>Amplification channel for long-form LinkedIn and blog content</li>
+      </ul>
+    </div>
+
+    <div class="rec-card card">
+      <div class="rec-platform">
+        <div class="rec-logo icon-fb"><svg viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></div>
+        Facebook
+      </div>
+      <div class="rec-priority">Community focus · Farmer audiences</div>
+      <ul class="rec-list">
+        <li>Share content into relevant farming groups — not just the TAP page</li>
+        <li>Post 3× per week: client work, industry news, farm photography</li>
+        <li>Targeted ads to UK farmers aged 35–65 for key client campaigns</li>
+        <li>Engage consistently with NFU, Farmers Weekly, Farmers Guardian</li>
+        <li>Facebook Events for webinars and trade shows TAP attends</li>
+        <li>Use Insights to identify which content drives most organic reach</li>
+      </ul>
+    </div>
+
+    <div class="rec-card card">
+      <div class="rec-platform">
+        <div class="rec-logo icon-tt"><svg viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.2 8.2 0 004.79 1.52V6.75a4.85 4.85 0 01-1.02-.06z"/></svg></div>
+        TikTok
+      </div>
+      <div class="rec-priority">New channel · Phase 2 launch · Future growth</div>
+      <ul class="rec-list">
+        <li>Launch in Month 3 — test and learn before committing budget in Month 6</li>
+        <li>Angle: "What an agricultural marketing agency actually does"</li>
+        <li>Behind-the-scenes: campaign shoots, drone operations, client site visits</li>
+        <li>Leverage harvest and seasonal moments — they go viral on TikTok agri</li>
+        <li>Study Olly Harrison's approach: education + personality + farming</li>
+        <li>Consistency is critical — 3–5 posts/week minimum to feed the algorithm</li>
+        <li>Target: 500 followers by end of year 1</li>
+      </ul>
+    </div>
+
+    <div class="rec-card card">
+      <div class="rec-platform">
+        <div class="rec-logo icon-yt"><svg viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></div>
+        YouTube
+      </div>
+      <div class="rec-priority">Long-term asset · Phase 3–4 investment</div>
+      <ul class="rec-list">
+        <li>Repurpose drone footage into longform field walkthrough content</li>
+        <li>Case study videos showing TAP campaigns end-to-end</li>
+        <li>YouTube SEO: "agricultural marketing" and "agri social media" searches</li>
+        <li>Host webinar recordings for ongoing organic discovery</li>
+        <li>Pair with LinkedIn: publish article + matching YouTube video together</li>
+        <li>Target: 20 quality videos published by end of year 1</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ENGAGEMENT TIPS -->
+<section id="engagement">
+  <div class="section-label">Engagement Framework</div>
+  <h2>How to Drive Real Engagement</h2>
+  <p class="section-intro">The tactics that consistently generate above-average engagement in the UK agricultural sector — grounded in what makes farming audiences actually respond.</p>
+
+  <div class="tips-grid">
+    <div class="tip-card card">
+      <div class="tip-icon">🌾</div>
+      <div class="tip-title">Seasonal Content Calendar</div>
+      <div class="tip-desc">Plan content around the farming year. Harvest (Aug–Oct), planting (Mar–May), shows (LAMMA Jan, Cereals June) and DEFRA policy moments create natural engagement peaks. Be ready to publish fast when they hit.</div>
+    </div>
+
+    <div class="tip-card card">
+      <div class="tip-icon">🎯</div>
+      <div class="tip-title">Show the Work, Not Just the Result</div>
+      <div class="tip-desc">Farming audiences are practical. Show the brief, the process, the creative debate. "How we planned the BASF spring campaign" consistently outperforms "BASF campaign live now."</div>
+    </div>
+
+    <div class="tip-card card">
+      <div class="tip-icon">🤝</div>
+      <div class="tip-title">Engage Before You Post</div>
+      <div class="tip-desc">Spend 20 minutes every morning commenting genuinely on posts from farmers, agronomists, NFU and trade bodies before publishing TAP content. Warms the algorithm and builds real relationships simultaneously.</div>
+    </div>
+
+    <div class="tip-card card">
+      <div class="tip-icon">🚁</div>
+      <div class="tip-title">Drone Footage Is Your Superpower</div>
+      <div class="tip-desc">Very few marketing agencies have genuine aerial agricultural content capability. A 30-second drone field video at harvest, posted to Reels or TikTok, will consistently outperform any static content.</div>
+    </div>
+
+    <div class="tip-card card">
+      <div class="tip-icon">📊</div>
+      <div class="tip-title">Data-Led Posts on LinkedIn</div>
+      <div class="tip-desc">"We analysed 50 UK agri-brand Instagram accounts — here's what works." Original data creates shareability, positions TAP as an authority, and generates enquiries from brands who want the full report.</div>
+    </div>
+
+    <div class="tip-card card">
+      <div class="tip-icon">🔗</div>
+      <div class="tip-title">Tag & Collaborate Strategically</div>
+      <div class="tip-desc">Tag clients when celebrating their campaigns. Tag creators when their work inspires you. Tag industry bodies when reacting to news. This dramatically expands organic reach beyond TAP's own follower base.</div>
+    </div>
+
+    <div class="tip-card card">
+      <div class="tip-icon">💬</div>
+      <div class="tip-title">Ask Questions That Matter</div>
+      <div class="tip-desc">End every post with a question the audience genuinely wants to answer: "What should UK farms be doing differently on social in 2026?" — not "What do you think? Let us know below!"</div>
+    </div>
+
+    <div class="tip-card card">
+      <div class="tip-icon">🏆</div>
+      <div class="tip-title">Celebrate Awards Loudly</div>
+      <div class="tip-desc">TAP has Rural Business and PPA wins. These should be recurring content: anniversary posts, behind-the-scenes of the submission, and what the win means to the team — not a single announcement post.</div>
+    </div>
+
+    <div class="tip-card card">
+      <div class="tip-icon">📅</div>
+      <div class="tip-title">Consistency Beats Perfection</div>
+      <div class="tip-desc">Three high-quality posts per week, every week, outperforms sporadic viral attempts. Build a content bank of 20+ posts before launch so publishing never stalls under capacity pressure.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🌾 The Ad Plain · Social Growth Roadmap · 2026</div>
+  <div class="footer-socials">
+    <div class="footer-social-btn icon-x" style="background:#000;border:1px solid #333;">
+      <svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </div>
+    <div class="footer-social-btn" style="background:#0A66C2;">
+      <svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </div>
+    <div class="footer-social-btn" style="background:#1877F2;">
+      <svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </div>
+    <div class="footer-social-btn icon-ig" style="background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366);">
+      <svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </div>
+    <div class="footer-social-btn icon-tt" style="background:#010101;border:1px solid #333;">
+      <svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.2 8.2 0 004.79 1.52V6.75a4.85 4.85 0 01-1.02-.06z"/></svg>
+    </div>
+    <div class="footer-social-btn" style="background:#FF0000;">
+      <svg viewBox="0 0 24 24" fill="white" width="16" height="16"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </div>
+  </div>
+  <div class="footer-note">5,582 followers today → 10,000+ target · 4-phase · 12-month roadmap</div>
+</footer>
+
+<script>
+  // Animate bar fills on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.querySelectorAll('.pc-bar-fill').forEach(el => {
+        el.style.width = el.dataset.width + '%';
+      });
+    }, 500);
+  });
+
+  // Count up
+  function animateCount(el, target, duration = 1800) {
+    let start = 0;
+    const step = target / (duration / 16);
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= target) { el.textContent = target.toLocaleString(); clearInterval(timer); }
+      else { el.textContent = Math.floor(start).toLocaleString(); }
+    }, 16);
+  }
+  document.querySelectorAll('.count-up').forEach(el => animateCount(el, parseInt(el.dataset.target)));
+
+  // Phase scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const delay = (parseInt(entry.target.dataset.phase || 1) - 1) * 120;
+        entry.target.style.transitionDelay = delay + 'ms';
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.phase-item').forEach(el => observer.observe(el));
+
+  // Generate floating pollen particles
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 3 + 1;
+    p.style.cssText = `
+      width: ${size}px;
+      height: ${size}px;
+      left: ${Math.random() * 100}%;
+      bottom: ${Math.random() * 40}%;
+      animation-duration: ${8 + Math.random() * 12}s;
+      animation-delay: ${Math.random() * 8}s;
+      opacity: 0;
+    `;
+    container.appendChild(p);
+  }
+</script>
+
+</body>
+</html>
